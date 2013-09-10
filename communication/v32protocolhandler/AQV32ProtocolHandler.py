@@ -193,10 +193,10 @@ class AQV32ProtocolHandler(ProtocolHandler):
                 try:
                     data = self._date_output_queue.get()
                     serial_data = data.split(',')
-                    accroRollPidData = PIDData(serial_data[0],serial_data[1],serial_data[2])
-                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_ACCRO_ROLL,accroRollPidData)
-                    accroPitchPidData = PIDData(serial_data[3],serial_data[4],serial_data[5])
-                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_ACCRO_PITCH,accroPitchPidData)
+                    accro_roll_pid_data = PIDData(serial_data[0],serial_data[1],serial_data[2])
+                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_ACCRO_ROLL,accro_roll_pid_data)
+                    accro_pitch_pid_data = PIDData(serial_data[3],serial_data[4],serial_data[5])
+                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_ACCRO_PITCH,accro_pitch_pid_data)
                     self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_ACCRO_STICK_SCALING,serial_data[6])
                 except:
                     logging.error("Protocol Handler: Failed to notify update rate PID data")
@@ -213,6 +213,44 @@ class AQV32ProtocolHandler(ProtocolHandler):
         command = command + str(pitch_pid.get_i()) + ';'
         command = command + str(pitch_pid.get_d()) + ';'
         command = command + str(stick_scaling)
+        self.send_command(command)
+        
+    def get_stable_pid(self):
+        def unpack_data():
+            if not self._date_output_queue.empty():
+                try:
+                    data = self._date_output_queue.get()
+                    serial_data = data.split(',')
+                    stable_accel_roll_pid_data = PIDData(serial_data[0],serial_data[1],serial_data[2])
+                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_STABLE_ACCEL_ROLL,stable_accel_roll_pid_data)
+                    stable_gyro_roll_pid_data = PIDData(serial_data[3],serial_data[4],serial_data[5])
+                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_STABLE_GYRO_ROLL,stable_gyro_roll_pid_data)
+                    stable_accel_pitch_pid_data = PIDData(serial_data[6],serial_data[7],serial_data[8])
+                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_STABLE_ACCEL_PITCH,stable_accel_pitch_pid_data)
+                    stable_gyro_pitch_pid_data = PIDData(serial_data[9],serial_data[10],serial_data[11])
+                    self._vehicle_event_dispatcher.dispatch_event(VehicleEventDispatcher.PID_STABLE_GYRO_PITCH,stable_gyro_pitch_pid_data)
+                except:
+                    logging.error("Protocol Handler: Failed to notify stable rate PID data")
+                    print "Protocol Handler: Failed to notify update stable PID data"
+
+        self.subscribe_command(self.COMMANDS['GetAttitudePID'], unpack_data)
+        
+    def set_stable_pid(self, accel_roll_pid, gyro_roll_pid, accel_pitch_pid, gyro_pitch_pid,):
+        command = self.COMMANDS['SetAttitudePID'] + ' '
+        command = command + str(accel_roll_pid.get_p()) + ';'
+        command = command + str(accel_roll_pid.get_i()) + ';'
+        command = command + str(accel_roll_pid.get_d()) + ';'
+        command = command + str(gyro_roll_pid.get_p()) + ';'
+        command = command + str(gyro_roll_pid.get_i()) + ';'
+        command = command + str(gyro_roll_pid.get_d()) + ';'
+        command = command + str(accel_pitch_pid.get_p()) + ';'
+        command = command + str(accel_pitch_pid.get_i()) + ';'
+        command = command + str(accel_pitch_pid.get_d()) + ';'
+        command = command + str(gyro_pitch_pid.get_p()) + ';'
+        command = command + str(gyro_pitch_pid.get_i()) + ';'
+        command = command + str(gyro_pitch_pid.get_d()) + ';'
+        command = command + '1000.00;'
+        print command
         self.send_command(command)
         
     def send_receiver_calibation_values(self, nb_channels, min_values, max_values):

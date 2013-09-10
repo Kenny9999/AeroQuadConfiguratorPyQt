@@ -63,6 +63,11 @@ class VehicleEventDispatcher(Observable):
     PID_ACCRO_PITCH = "PID_ACCRO_PITCH"
     PID_ACCRO_STICK_SCALING = "PID_ACCRO_STICK_SCALING"
     
+    PID_STABLE_ACCEL_ROLL = "PID_STABLE_ACCEL_ROLL"
+    PID_STABLE_GYRO_ROLL = "PID_STABLE_GYRO_ROLL"
+    PID_STABLE_ACCEL_PITCH = "PID_STABLE_ACCEL_PITCH"
+    PID_STABLE_GYRO_PITCH = "PID_STABLE_GYRO_PITCH"
+    
     
     def __init__(self):
         Observable.__init__(self)

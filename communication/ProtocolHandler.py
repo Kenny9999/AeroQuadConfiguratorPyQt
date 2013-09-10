@@ -32,7 +32,8 @@ class ProtocolHandler(object):
 
     def send_command(self, command):
         if self._is_subscribed:
-            raise AlreadySubscribedException("already subscribed. stop subscriptions before sending another command")
+            self.unsubscribe_command()
+#             raise AlreadySubscribedException("already subscribed. stop subscriptions before sending another command")
         self._communicator.write(bytes(command.encode('utf-8')))
         self._communicator.flush() 
     

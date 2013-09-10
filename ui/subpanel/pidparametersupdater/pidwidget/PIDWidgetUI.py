@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'PIDWidgetUI.ui'
 #
-# Created: Sat Jun 22 10:24:31 2013
+# Created: Mon Sep 09 20:16:38 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,6 +35,8 @@ class Ui_PIDWidget(object):
         self.gridLayout.addLayout(self.main_layout, 1, 0, 1, 1)
         self.title_label = QtGui.QLabel(PIDWidget)
         self.title_label.setMaximumSize(QtCore.QSize(16777215, 25))
+        self.title_label.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);\n"
+"font: 75 10pt \"MS Shell Dlg 2\";"))
         self.title_label.setObjectName(_fromUtf8("title_label"))
         self.gridLayout.addWidget(self.title_label, 0, 0, 1, 1)
 

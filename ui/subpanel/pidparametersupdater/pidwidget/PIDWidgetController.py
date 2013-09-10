@@ -90,3 +90,8 @@ class PIDWidgetController(QtGui.QWidget):
         self.i_line.reset_default()
         self.d_line.reset_default()
         
+    def set_same(self):
+        self.p_line.set_same()
+        self.i_line.set_same()
+        self.d_line.set_same()
+        

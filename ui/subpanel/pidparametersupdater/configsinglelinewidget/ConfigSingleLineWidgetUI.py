@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ConfigSingleLineWidgetUI.ui'
 #
-# Created: Sun Sep 08 16:26:04 2013
+# Created: Mon Sep 09 20:14:05 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -38,6 +38,7 @@ class Ui_PIDSingleLineWidget(object):
         self.title_label = QtGui.QLabel(self.gridWidget)
         self.title_label.setMinimumSize(QtCore.QSize(200, 25))
         self.title_label.setMaximumSize(QtCore.QSize(200, 25))
+        self.title_label.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);"))
         self.title_label.setMidLineWidth(0)
         self.title_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.title_label.setObjectName(_fromUtf8("title_label"))
@@ -52,6 +53,7 @@ class Ui_PIDSingleLineWidget(object):
         self.default_label = QtGui.QLabel(self.gridWidget)
         self.default_label.setMinimumSize(QtCore.QSize(50, 25))
         self.default_label.setMaximumSize(QtCore.QSize(16777215, 25))
+        self.default_label.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);"))
         self.default_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.default_label.setObjectName(_fromUtf8("default_label"))
         self.pid_layout.addWidget(self.default_label, 0, 3, 1, 1)

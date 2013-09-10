@@ -109,12 +109,6 @@ class AccroPIDTuningController(QtGui.QWidget, BasePanelController):
         self._current_stick_scaling = self.translate_current_stick_scaling_from_board(stick_scaling)
         if self._is_starting :
             self._stick_scaling_controller.set_value(self._current_stick_scaling)
-            self._set_synched()
-            self._is_starting = False
-        
-        if self.is_synched():
-            self._set_synched()
-            self._protocol_handler.send_command_wihout_subscription(self._protocol_handler.COMMANDS['WriteUserValuesEEPROM'])
         
     def start(self):
         self._is_starting = True
@@ -126,6 +120,10 @@ class AccroPIDTuningController(QtGui.QWidget, BasePanelController):
         
     def sync_with_board(self):
         if self._is_starting :
+            if not self.is_synched():
+                self._protocol_handler.send_command_wihout_subscription(self._protocol_handler.COMMANDS['GetRatePID']);
+                return
+            self._is_starting = False
             return
 
         if self.is_synched() :
@@ -155,13 +153,9 @@ class AccroPIDTuningController(QtGui.QWidget, BasePanelController):
         return True
     
     def _set_synched(self):
-        self._roll_pid_controller.p_line.set_same()
-        self._roll_pid_controller.i_line.set_same()
-        self._roll_pid_controller.d_line.set_same()
-        self._pitch_pid_controller.p_line.set_same()
-        self._pitch_pid_controller.i_line.set_same()
-        self._pitch_pid_controller.d_line.set_same()
-        self._stick_scaling_controller._line.set_same()
+        self._roll_pid_controller.set_same()
+        self._pitch_pid_controller.set_same()
+        self._stick_scaling_controller.set_same()
         
     def _send_pid_to_board(self):
         roll_pid = self._roll_pid_controller.get_current_pid()

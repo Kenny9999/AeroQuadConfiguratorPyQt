@@ -42,6 +42,8 @@ class PIDParametersUpdaterController(QtGui.QWidget, BasePanelController):
         self._timer.timeout.connect(self._sync_with_board)
         
     def _pid_list_selection_clicked(self):
+        self._timer.stop()
+        
         self._current_pid_tuning_controller.stop()
         if (self.ui.pid_type_list.currentItem().text() == 'ACCRO'):
             self._current_pid_tuning_controller = self._accro_pid_tuning_controller
@@ -50,12 +52,14 @@ class PIDParametersUpdaterController(QtGui.QWidget, BasePanelController):
         
         self.ui.panel_container.setCurrentWidget(self._current_pid_tuning_controller)
         if (self._user_level_mode == PIDUpdateMode.BEGINNER_MODE) :
-            self._current_pid_tuning_controller.setBeginnerMode()
+            self._current_pid_tuning_controller.set_beginner_mode()
         elif (self._user_level_mode == PIDUpdateMode.INTERMEDIATE_MODE) :
-            self._current_pid_tuning_controller.setIntermediateMode()
+            self._current_pid_tuning_controller.set_intermediate_mode()
         else :
-            self._current_pid_tuning_controller.setAdvancedMode()
+            self._current_pid_tuning_controller.set_advanced_mode()()
         self._current_pid_tuning_controller.start()
+        
+        self._timer.start()
         
     def _beginner_radio_button_pressed(self):
         self._user_level_mode = PIDUpdateMode.BEGINNER_MODE

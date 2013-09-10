@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'PIDParametersUpdaterPanel.ui'
 #
-# Created: Sun Sep 08 17:48:13 2013
+# Created: Mon Sep 09 20:11:17 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -38,16 +38,19 @@ class Ui_PIDParametersUpdaterPanel(object):
         self.horizontalLayout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.beginner_radio_button = QtGui.QRadioButton(PIDParametersUpdaterPanel)
+        self.beginner_radio_button.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);"))
         self.beginner_radio_button.setObjectName(_fromUtf8("beginner_radio_button"))
         self.buttonGroup = QtGui.QButtonGroup(PIDParametersUpdaterPanel)
         self.buttonGroup.setObjectName(_fromUtf8("buttonGroup"))
         self.buttonGroup.addButton(self.beginner_radio_button)
         self.horizontalLayout.addWidget(self.beginner_radio_button)
         self.intermediate_radio_button = QtGui.QRadioButton(PIDParametersUpdaterPanel)
+        self.intermediate_radio_button.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);"))
         self.intermediate_radio_button.setObjectName(_fromUtf8("intermediate_radio_button"))
         self.buttonGroup.addButton(self.intermediate_radio_button)
         self.horizontalLayout.addWidget(self.intermediate_radio_button)
         self.advance_radio_button = QtGui.QRadioButton(PIDParametersUpdaterPanel)
+        self.advance_radio_button.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);"))
         self.advance_radio_button.setObjectName(_fromUtf8("advance_radio_button"))
         self.buttonGroup.addButton(self.advance_radio_button)
         self.horizontalLayout.addWidget(self.advance_radio_button)
