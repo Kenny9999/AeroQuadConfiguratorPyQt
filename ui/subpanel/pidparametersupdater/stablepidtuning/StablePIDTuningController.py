@@ -168,6 +168,7 @@ class StablePIDTuningController(QtGui.QWidget, BasePanelController):
 
         if self.is_synched() :
             self._protocol_handler.unsubscribe_command()
+            self._protocol_handler.send_command_wihout_subscription(self._protocol_handler.COMMANDS['WriteUserValuesEEPROM']);
             self._set_synched()
             return
         
@@ -208,6 +209,10 @@ class StablePIDTuningController(QtGui.QWidget, BasePanelController):
         if self._user_update_mode != PIDUpdateMode.BEGINNER_MODE :
             accel_pitch_pid = self._accel_pitch_pid_controller.get_current_pid()
             gyro_pitch_pid = self._gyro_pitch_pid_controller.get_current_pid()
+        else :
+            self._accel_pitch_pid_controller.set_current_pid(accel_pitch_pid)
+            self._gyro_pitch_pid_controller.set_current_pid(gyro_pitch_pid)
+            
         
         self._protocol_handler.set_stable_pid(accel_roll_pid, gyro_roll_pid, accel_pitch_pid, gyro_pitch_pid)
 

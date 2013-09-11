@@ -16,12 +16,10 @@ class ConfigSingleLineWidgetController(QtGui.QWidget):
         self.set_different()
         
         self.ui.slider.setSingleStep(1)
-        self.ui.slider.sliderReleased.connect(self._slider_released)
-        self.ui.slider.sliderMoved.connect(self._slider_move)
-        self.ui.slider.valueChanged.connect(self._slider_move)
+        self.ui.slider.sliderReleased.connect(self._slider_event)
+        self.ui.slider.sliderMoved.connect(self._slider_event)
+        self.ui.slider.valueChanged.connect(self._slider_event)
         self.ui.edit_box.valueChanged.connect(self._edit_box_value_changed)
-        
-        self._block_listener = False
         
     def set_different(self):
         self.ui.sync_feedback_label.setStyleSheet("background-color: rgb(255, 255, 0);")
@@ -38,38 +36,26 @@ class ConfigSingleLineWidgetController(QtGui.QWidget):
     def set_bounds(self, min_value, max_value):
         self._min_bound = min_value
         self._max_bound = max_value
-        self.ui.slider.setMinimum(self._min_bound*100)
-        self.ui.slider.setMaximum(self._max_bound*100)
-        self.ui.edit_box.setMinimum(self._min_bound)
-        self.ui.edit_box.setMaximum(self._max_bound)
+        self.ui.slider.setMinimum(int(self._min_bound)*100)
+        self.ui.slider.setMaximum(int(self._max_bound)*100)
+        self.ui.edit_box.setMinimum(float(self._min_bound))
+        self.ui.edit_box.setMaximum(float(self._max_bound))
     
     def set_value(self,value):
-        self._block_listener = True
         floatValue = float(value)
-        self.ui.slider.setValue(floatValue*100)
+        self.ui.slider.setValue(floatValue*100.0)
         self.ui.edit_box.setValue(floatValue)
-        self._block_listener = False
     
     def get_value(self):
         return self.ui.edit_box.value()
         
-    def _slider_released(self):
-        if self._block_listener:
-            return
-        value = self.ui.slider.value()/100
-        self.ui.edit_box.setValue(value)
-        self.set_different()
-        
-    def _slider_move(self):
-        if self._block_listener:
-            return
-        value = self.ui.slider.value()/100
-        self.ui.edit_box.setValue(value)
+    def _slider_event(self):
+        value = self.ui.slider.value()
+        floatValue = float(float(value)/100.0)
+        self.ui.edit_box.setValue(floatValue)
         self.set_different()
         
     def _edit_box_value_changed(self):
-        if self._block_listener:
-            return
         value = self.ui.edit_box.value()
         self.ui.slider.setValue(value*100)
         self.set_different()
@@ -78,7 +64,7 @@ class ConfigSingleLineWidgetController(QtGui.QWidget):
         self.ui.edit_box.setEnabled(enabled)
         
     def reset_default(self):
-        self.ui.slider.setValue(float(self.ui.default_label.text())*100)
+        self.ui.slider.setValue(int(float(self.ui.default_label.text())*100))
         self.ui.edit_box.setValue(float(self.ui.default_label.text()))
         self.set_different()
         

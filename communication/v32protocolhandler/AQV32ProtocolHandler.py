@@ -249,8 +249,7 @@ class AQV32ProtocolHandler(ProtocolHandler):
         command = command + str(gyro_pitch_pid.get_p()) + ';'
         command = command + str(gyro_pitch_pid.get_i()) + ';'
         command = command + str(gyro_pitch_pid.get_d()) + ';'
-        command = command + '1000.00;'
-        print command
+        command = command + '1000.00'
         self.send_command(command)
         
     def send_receiver_calibation_values(self, nb_channels, min_values, max_values):

@@ -128,6 +128,7 @@ class AccroPIDTuningController(QtGui.QWidget, BasePanelController):
 
         if self.is_synched() :
             self._protocol_handler.unsubscribe_command()
+            self._protocol_handler.send_command_wihout_subscription(self._protocol_handler.COMMANDS['WriteUserValuesEEPROM']);
             self._set_synched()
             return
         
